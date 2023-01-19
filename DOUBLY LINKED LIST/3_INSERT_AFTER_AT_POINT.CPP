@@ -1,0 +1,79 @@
+// PROGRAM TO INSERT NODE AFTER AT THE POINT TO GIVEN DLL.
+
+#include <iostream>
+using namespace std;
+class node
+{
+public:
+    int data;
+    node *next;
+    node *prev;
+    node(int val)
+    {
+        data = val;
+        next = NULL;
+        prev = NULL;
+    }
+};
+void insertatpoint(node *&head, int key, int val)
+{
+    node *n = new node(val);
+    node *temp = head;
+    while (temp->data != key)
+    {
+        temp = temp->next;
+    }
+    n->next = temp->next;
+    temp->next->prev = n;
+    n->prev = temp;
+    temp->next = n;
+}
+void insertatend(node *&head, int val)
+{
+    node *n = new node(val);
+    node *temp;
+    temp = head;
+    if (head == NULL)
+    {
+        head = n;
+    }
+    else
+    {
+        while (temp->next != NULL)
+        {
+            temp = temp->next;
+        }
+        temp->next = n;
+        n->prev = temp;
+    }
+}
+void display(node *temp)
+{
+    while (temp != NULL)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+    cout << endl;
+}
+int main()
+{
+    node *head = NULL;
+    int n, val, key;
+    cout << "Enter the numbers of NODES :";
+    cin >> n;
+
+    cout << "Enter the NODES :";
+    for (int i = 0; i < n; i++)
+    {
+        cin >> val;
+        insertatend(head, val);
+    }
+    display(head);
+
+    cout << "Enter the key and node :";
+    cin >> key >> val;
+    insertatpoint(head, key, val);
+    display(head);
+    return 0;
+}
